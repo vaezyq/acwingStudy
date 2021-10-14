@@ -1,0 +1,47 @@
+//
+// Created by 22126 on 2021/10/14.
+//
+
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    int numLen, queryLen;
+    cin >> numLen >> queryLen;
+    int *array = new int[numLen];
+    for (int k = 0; k < numLen; ++k) {
+        cin >> array[k];
+    }
+    int *sum = new int[numLen];
+    sum[0] = array[0];
+    for (int k = 1; k < numLen; ++k) {
+        sum[k] = sum[k - 1] + array[k];
+    }
+
+    for (int k = 0; k < numLen; ++k) {
+        cout << sum[k] << " ";
+    }
+
+    int lIndex, rIndex;
+    for (int i = 0; i < queryLen; ++i) {
+        cin >> lIndex >> rIndex;
+        if (lIndex == 1) {
+            cout << sum[rIndex - 1] << endl;
+        } else {
+            cout << (sum[rIndex - 1] - sum[lIndex - 2]) << endl;
+        }
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+

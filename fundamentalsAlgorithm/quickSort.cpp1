@@ -1,0 +1,84 @@
+//
+// Created by 22126 on 2021/10/11.
+//
+
+
+#include <iostream>
+
+using namespace std;
+
+const int N = 1e6;
+
+void quickSort(int *array, int startIndex, int endIndex);
+
+void other_quick(int *array, int startIndex, int endIndex);
+
+int arrayNum[N];
+
+int main01() {
+
+    int m;
+    cin >> m;
+
+
+    for (int i = 0; i < m; ++i) {
+        scanf("%d", &arrayNum[i]);
+    }
+    other_quick(arrayNum, 0, m - 1);
+    for (int i = 0; i < m; ++i) {
+        cout << arrayNum[i] << " ";
+    }
+    return 0;
+
+}
+
+void quickSort(int *array, int startIndex, int endIndex) {
+    if (startIndex >= endIndex) {
+        return;
+    }
+
+    int basic = array[(startIndex + endIndex) >> 1];
+    int leftPointer = startIndex - 1, rightPointer = endIndex + 1;
+
+
+    while (leftPointer < rightPointer) {
+        do {
+            leftPointer++;
+        } while (array[leftPointer] < basic);
+        do {
+            rightPointer--;
+        } while (array[rightPointer] > basic);
+
+        if (leftPointer < rightPointer) {
+            swap(array[leftPointer], array[rightPointer]);
+        }
+
+    }
+
+    quickSort(array, startIndex, rightPointer);
+    quickSort(array, rightPointer + 1, endIndex);
+
+
+}
+
+
+void other_quick(int *array, int startIndex, int endIndex) {
+    if (startIndex >= endIndex) {
+        return;
+    }
+    int basic = array[startIndex];
+    int i = startIndex + 1, j = startIndex + 1;
+    for (; j <= endIndex; j++) {
+        if (array[j] < basic) {
+            swap(array[j], array[i]);
+            i++;
+        }
+    }
+    swap(array[startIndex], array[i - 1]);
+
+
+    other_quick(array, startIndex, i - 2);
+    other_quick(array, i, endIndex);
+
+}
+

@@ -1,0 +1,43 @@
+//
+// Created by 22126 on 2021/10/14.
+//
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+
+int main() {
+    string numOne;
+    vector<int> numO, res;
+    int numTwo;
+    cin >> numOne >> numTwo;
+
+
+    for (int i = 0; i < numOne.size(); ++i) {
+        numO.push_back(numOne[i] - '0');
+    }
+
+    int remainder = 0;
+    for (int k = 0; k < numO.size(); ++k) {
+        remainder = remainder * 10 + numO[k];
+        res.push_back(remainder / numTwo);
+        remainder = remainder % numTwo;
+    }
+
+
+    reverse(res.begin(), res.end());
+    while (res.size() > 1 && res.back() == 0) {
+        res.pop_back();
+    }
+
+
+    for (int k = res.size() - 1; k >= 0; k--) {
+        cout << res[k];
+    }
+    cout << endl;
+    cout << remainder;
+
+}

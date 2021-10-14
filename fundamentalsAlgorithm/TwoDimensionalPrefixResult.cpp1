@@ -1,0 +1,70 @@
+//
+// Created by 22126 on 2021/10/14.
+//
+
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    int row, col, queryNum;
+    cin >> row >> col >> queryNum;
+
+
+    int **array;
+    array = (int **) malloc((row + 1) * sizeof(int *));
+    for (int i = 0; i < (row + 1); ++i) {
+        array[i] = (int *) malloc((col + 1) * sizeof(int));
+    }
+    for (int i = 1; i <= row; ++i) {
+        for (int j = 1; j <= col; ++j) {
+            cin >> array[i][j];
+        }
+    }
+
+    int **sum;
+    sum = (int **) malloc((row + 1) * sizeof(int *));
+    for (int i = 0; i < (row + 1); ++i) {
+        sum[i] = (int *) malloc((col + 1) * sizeof(int));
+    }
+    sum[1][1] = array[1][1];
+    for (int i = 0; i <= row; ++i) {
+        array[i][0] = 0;
+        sum[i][0] = 0;
+    }
+
+    for (int j = 0; j <= col; ++j) {
+        array[0][j] = 0;
+        sum[0][j] = 0;
+    }
+
+
+    for (int i = 1; i <= row; ++i) {
+        sum[i][1] = array[i][1] + sum[i - 1][1];
+    }
+
+    for (int j = 1; j <= col; ++j) {
+        sum[1][j] = array[1][j] + sum[1][j - 1];
+    }
+
+
+    for (int i = 2; i <= row; ++i) {
+        for (int j = 2; j <= col; ++j) {
+            sum[i][j] = sum[i - 1][j] + sum[i][j - 1] + array[i][j] - sum[i - 1][j - 1];
+        }
+    }
+
+    int x1, y1, x2, y2;
+
+    for (int k = 0; k < queryNum; ++k) {
+        cin >> x1 >> y1 >> x2 >> y2;
+        cout << sum[x2][y2] - sum[x2][y1 - 1] - sum[x1 - 1][y2] + sum[x1 - 1][y1 - 1] << endl;
+    }
+}
+
+
+
+
+
+
+
