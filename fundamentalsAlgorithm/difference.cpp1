@@ -1,0 +1,39 @@
+//
+// Created by 22126 on 2021/10/14.
+//
+
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    int len, opeNum;
+    cin >> len >> opeNum;
+    int *array = new int[len + 1];
+    array[0] = 0;
+    for (int k = 1; k <= len; ++k) {
+        cin >> array[k];
+    }
+
+    int *diff = new int[len + 1];
+    diff[1] = array[1];
+    for (int k = 2; k <= len; ++k) {
+        diff[k] = array[k] - array[k - 1];
+    }
+
+    int lIndex, rIndex, num;
+    for (int i = 0; i < opeNum; ++i) {
+        cin >> lIndex >> rIndex >> num;
+        diff[lIndex] += num;
+
+        if (rIndex + 1 < len + 1) {
+            diff[rIndex + 1] -= num;
+        }
+    }
+    for (int i = 1; i <= len; ++i) {
+        array[i] = array[i - 1] + diff[i];
+        cout << array[i] << " ";
+    }
+
+
+}
